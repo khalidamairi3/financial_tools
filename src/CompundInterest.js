@@ -10,13 +10,14 @@ import Slider from "@mui/material/Slider";
 
 export default class CompundInterest extends Component {
   state = {
-    frequency: 365,
+    frequency: 1,
     compound: 1,
     initial: 0,
     rate: 3.0,
     addition: 0,
     years: 1,
     clicked: false,
+    result: 0,
   };
   valuetext = (value) => {
     return `${value}years`;
@@ -25,15 +26,34 @@ export default class CompundInterest extends Component {
     this.setState({ clicked: true });
   };
   render() {
-    let { frequency, compound, initial, rate, addition, years } = this.state;
+    let { frequency, compound, initial, rate, addition, years, result } =
+      this.state;
     const calculateInterest = () => {
+      let total = 0;
       if (this.state.clicked) {
+        total = initial * (1 + (rate * 0.01) / compound) ** (compound * years);
+        let additionalAmount = 0;
+        for (let j = 1; j <= frequency; j++) {
+          additionalAmount +=
+            addition *
+            (1 + (((rate * 0.01) / compound) * (frequency - j)) / frequency);
+          console.log(additionalAmount);
+        }
+
+        for (let i = 1; i <= years; i++) {
+          total +=
+            additionalAmount *
+            (1 + (rate * 0.01) / compound) ** (compound * (years - i));
+        }
+        this.setState({ result: total });
+        this.setState({ clicked: false });
+      }
+      if (result > 0) {
         return (
-          <h1>
-            {" "}
-            Your total Investment is{" "}
-            {initial * (1 + rate / compound) ** (compound * years)}
-          </h1>
+          <div>
+            <h1> Your total Investment is {result.toFixed(2)}$</h1>
+            <h2> {1 + (rate * 0.01) / compound}</h2>
+          </div>
         );
       }
     };
@@ -79,11 +99,11 @@ export default class CompundInterest extends Component {
                   this.setState({ frequency: e.target.value });
                 }}
               >
-                <MenuItem value={10}>Weekly</MenuItem>
-                <MenuItem value={20}>Bi-weekly</MenuItem>
-                <MenuItem value={30}>Monthly</MenuItem>
-                <MenuItem value={20}>Quarterly</MenuItem>
-                <MenuItem value={30}>Yearly</MenuItem>
+                <MenuItem value={52}>Weekly</MenuItem>
+                <MenuItem value={26}>Bi-weekly</MenuItem>
+                <MenuItem value={12}>Monthly</MenuItem>
+                <MenuItem value={4}>Quarterly</MenuItem>
+                <MenuItem value={1}>Yearly</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -109,11 +129,7 @@ export default class CompundInterest extends Component {
                 this.setState({ compound: e.target.value });
               }}
             >
-              <MenuItem value={10}>Weekly</MenuItem>
-              <MenuItem value={20}>Bi-weekly</MenuItem>
-              <MenuItem value={30}>Monthly</MenuItem>
-              <MenuItem value={20}>Quarterly</MenuItem>
-              <MenuItem value={30}>Yearly</MenuItem>
+              <MenuItem value={1}>Yearly</MenuItem>
             </Select>
           </FormControl>
           <Box id="slider" sx={{ width: 300 }}>
@@ -139,7 +155,7 @@ export default class CompundInterest extends Component {
           id="conversion-button"
           variant="contained"
         >
-          Convert
+          Calculate
         </Button>
         {calculateInterest()}
       </div>
