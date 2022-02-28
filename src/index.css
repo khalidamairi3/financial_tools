@@ -26,3 +26,22 @@ code {
   grid-template-columns: 2fr 1fr;
   grid-column-gap: 2vw;
 }
+
+#interest-calculator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1vw;
+  width: 80%;
+
+  justify-items: center;
+}
+
+#addition {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: flex-start;
+}
+#slider {
+  grid-column: 1 / span 2;
+  text-align: center;
+}
