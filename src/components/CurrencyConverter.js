@@ -21,7 +21,9 @@ export default class CurrencyConverter extends Component {
     axios
       .request({
         method: "GET",
-        url: "https://freecurrencyapi.net/api/v2/latest?apikey=ea703a70-95de-11ec-ae9a-87f1c6203248",
+        url:
+          "https://freecurrencyapi.net/api/v2/latest?apikey=" +
+          process.env.API_KEY,
       })
       .then((response) => {
         let rates = response.data.data;
