@@ -66,6 +66,13 @@ export default class CurrencyConverter extends Component {
 
     return (
       <div>
+        <img
+          src="https://images.unsplash.com/photo-1638913971251-832d29947de6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80"
+          alt="currency converter"
+          height={350}
+          width={1150}
+          style={{ alignSelf: "center" }}
+        />
         <h1> Currency Converter</h1>
 
         <div id="currency-converter">

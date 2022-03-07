@@ -16,6 +16,7 @@ export default class CompundInterest extends Component {
     rate: 3.0,
     addition: 0,
     years: 1,
+    pageYears: 1,
     clicked: false,
     result: 0,
   };
@@ -26,11 +27,20 @@ export default class CompundInterest extends Component {
     this.setState({ clicked: true });
   };
   render() {
-    let { frequency, compound, initial, rate, addition, years, result } =
-      this.state;
+    let {
+      frequency,
+      compound,
+      initial,
+      pageYears,
+      rate,
+      addition,
+      years,
+      result,
+    } = this.state;
     const calculateInterest = () => {
       let total = 0;
       if (this.state.clicked) {
+        this.setState({ pageYears: years });
         total = initial * (1 + (rate * 0.01) / compound) ** (compound * years);
         let additionalAmount = 0;
         for (let j = 1; j <= frequency; j++) {
@@ -51,14 +61,28 @@ export default class CompundInterest extends Component {
       if (result > 0) {
         return (
           <div>
-            <h1> Your total Investment is {result.toFixed(2)}$</h1>
-            <h2> {1 + (rate * 0.01) / compound}</h2>
+            <h1>
+              {" "}
+              Your total Investment will be{" "}
+              {result
+                .toFixed(2)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              $ after {pageYears} years
+            </h1>
           </div>
         );
       }
     };
     return (
       <div>
+        <img
+          src="https://images.unsplash.com/photo-1642092445920-37a5dbaeb774?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80"
+          alt="compound interest rate calculator"
+          height={350}
+          width={1150}
+          style={{ alignSelf: "center" }}
+        />
         <h1> Compound Interest Rate Calculator</h1>
         <h2>
           Find out how your investment will grow over time with compound
